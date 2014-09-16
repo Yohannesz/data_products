@@ -1,20 +1,28 @@
 library(shiny)
 
 # Define UI Crime Idex data obtained from the following sources
-shinyUI(pageWithSidebar(
-        
-        # Application title
-        headerPanel("Crime Index Plot "),
+shinyUI(fluidPage(
+        titlePanel(" Violent Crime Severity Index on major Canadian Cities"),
+      
         
         # Sidebar with controls to select the variable to plot against Crime Index
         # and to specify whether outliers should be included
+        sidebarLayout(
+                
         sidebarPanel(
                 selectInput("variable", "Variable:",
                             list("Year" = "year", 
                                  "City" = "city")),
                 
-                checkboxInput("outliers", "Show outliers", TRUE)
+                checkboxInput("outliers", "Show outliers", TRUE),
+                helpText("Note: Choose Variable city or Year.", 
+                         "The outliers check box will show only the for ",
+                         "variable Year.",
+                         "The table shows highest crime index obtained from",
+                         "year 2009 to 2012")
+                
         ),
+        
         
         # Show the caption and plot of the requested variable against Crime Index
         mainPanel(
@@ -30,6 +38,9 @@ shinyUI(pageWithSidebar(
                 
                 h3(textOutput("caption")),
                 
-                plotOutput("CrimePlot")
+                plotOutput("CrimePlot"),
+                h4("Highest violent crime index were shown in the following cities"),
+                tableOutput("view")
+        )
         )
 ))
